@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +19,11 @@ class MainActivity : AppCompatActivity() {
         sorawJuwapClasses = dao.getAllData()
         btnOK.setOnClickListener {
             val map:MutableMap<String,Any> = mutableMapOf()
-            sorawJuwapClasses.forEach{
-                map["id"] = it.id.toString()
+            sorawJuwapClasses.forEach{ it ->
+                map["id"] = UUID.randomUUID().toString()
                 map["soraw"] = it.soraw.toString()
                 map["juwap"] = it.juwap.toString()
-                db.collection("patua").document().set(map)
+                db.collection("questions").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
                         }
