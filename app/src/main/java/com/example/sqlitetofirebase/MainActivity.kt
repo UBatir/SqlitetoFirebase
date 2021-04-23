@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private val db= FirebaseFirestore.getInstance()
     private lateinit var dao:Dao
-    lateinit var  data: List<RawyatClass>
+    lateinit var  data: List<MagliwmatClass>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,9 +22,11 @@ class MainActivity : AppCompatActivity() {
             data.forEach{ it ->
                 map["id"] = UUID.randomUUID().toString()
                 map["title"] = it.title.toString()
-                map["full_text"] = it.full_text.toString()
+                map["fulltext"] = it.fulltext.toString()
+                map["date"] = it.date.toString()
+                map["categoryId"] = it.catid.toString()
                 map["hits"] = it.hits.toString()
-                db.collection("rawiyat").document(map["id"].toString()).set(map)
+                db.collection("magliwmatlar").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
                         }
