@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         dao=PaziyletDatabase.getInstance(this).dao()
         sorawJuwapClasses = dao.getAllData()
+        var cnt=0
         btnOK.setOnClickListener {
             val map:MutableMap<String,Any> = mutableMapOf()
             sorawJuwapClasses.forEach{ it ->
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 map["juwap"] = it.juwap.toString()
                 db.collection("questions").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Otlichno${cnt++}", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
