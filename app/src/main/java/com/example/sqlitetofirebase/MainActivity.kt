@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private val db= FirebaseFirestore.getInstance()
     private lateinit var dao:Dao
-    lateinit var  data: List<PostsClass>
+    lateinit var  data: List<RawyatClass>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,10 +23,8 @@ class MainActivity : AppCompatActivity() {
                 map["id"] = UUID.randomUUID().toString()
                 map["title"] = it.title.toString()
                 map["full_text"] = it.full_text.toString()
-                map["date"] = it.date.toString()
                 map["hits"] = it.hits.toString()
-                map["hide"] = it.hide.toString()
-                db.collection("posts").document(map["id"].toString()).set(map)
+                db.collection("rawiyat").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
                         }

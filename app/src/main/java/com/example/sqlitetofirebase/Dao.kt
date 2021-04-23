@@ -5,6 +5,6 @@ import androidx.room.Query
 
 @Dao
 interface Dao {
-    @Query("SELECT * FROM posts")
-    fun getAllData():List<PostsClass>
+    @Query("SELECT * FROM rawyat")
+    fun getAllData():List<RawyatClass>
 }
