@@ -11,16 +11,16 @@ class MainActivity : AppCompatActivity() {
 
     private val db= FirebaseFirestore.getInstance()
     private lateinit var dao:Dao
-    lateinit var  sorawJuwapClasses: List<SorawJuwapClass>
+    lateinit var  data: List<SorawJuwapClass>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         dao=PaziyletDatabase.getInstance(this).dao()
-        sorawJuwapClasses = dao.getAllData()
+        data = dao.getAllData()
         var cnt=0
         btnOK.setOnClickListener {
             val map:MutableMap<String,Any> = mutableMapOf()
-            sorawJuwapClasses.forEach{ it ->
+            data.forEach{ it ->
                 map["id"] = UUID.randomUUID().toString()
                 map["soraw"] = it.soraw.toString()
                 map["juwap"] = it.juwap.toString()
