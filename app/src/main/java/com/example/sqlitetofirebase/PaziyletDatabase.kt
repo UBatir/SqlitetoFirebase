@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [SorawJuwapClass::class],version = 2)
+@Database(entities = [PatuaClass::class],version = 2)
 abstract class PaziyletDatabase: RoomDatabase() {
 
     companion object {
