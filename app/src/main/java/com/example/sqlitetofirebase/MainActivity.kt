@@ -1,29 +1,48 @@
 package com.example.sqlitetofirebase
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val db= FirebaseFirestore.getInstance()
-    private lateinit var dao:Dao
-    lateinit var  data: List<RawyatClass>
+    private val db = FirebaseFirestore.getInstance()
+    private val storage = FirebaseStorage.getInstance()
+
+    private lateinit var dao: Dao
+    lateinit var data: List<RawyatClass>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        dao=PaziyletDatabase.getInstance(this).dao()
-        data = dao.getAllData()
+        dao = PaziyletDatabase.getInstance(this).dao()
         btnOK.setOnClickListener {
-            val map:MutableMap<String,Any> = mutableMapOf()
-            data.forEach{ it ->
+            data = dao.getAllData()
+            data.forEach { rawyat ->
+                uploadPhoto(rawyat)
+            }
+        }
+    }
+
+    private fun uploadPhoto(rawyat: RawyatClass) {
+        val imgName = rawyat.img.toString().substringAfterLast('/')
+        val uri = Uri.parse("android.resource://$packageName/drawable/$imgName")
+        val ref = storage.reference.child("images/" + UUID.randomUUID().toString())
+        ref.putFile(uri).addOnSuccessListener {
+            ref.downloadUrl.addOnSuccessListener {
+                Log.d("suwret", it.toString())
+                val map: MutableMap<String, Any> = mutableMapOf()
                 map["id"] = UUID.randomUUID().toString()
-                map["title"] = it.title.toString()
-                map["full_text"] = it.full_text.toString()
-                map["hits"] = it.hits.toString()
+                map["title"] = rawyat.title.toString()
+                map["image"] = it.toString()
+                map["text"] = rawyat.full_text.toString()
+                map["hits"] = rawyat.hits.toString()
                 db.collection("rawiyat").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()

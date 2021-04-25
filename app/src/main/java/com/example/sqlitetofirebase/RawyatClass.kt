@@ -9,6 +9,7 @@ data class RawyatClass(
     @PrimaryKey
     @ColumnInfo(name= "id") val id:Int?,
     @ColumnInfo(name= "title") val title:String?,
+    @ColumnInfo(name= "img") val img:String?,
     @ColumnInfo(name= "full_text") val full_text:String?,
     @ColumnInfo(name= "hits") val hits:String?
 )
