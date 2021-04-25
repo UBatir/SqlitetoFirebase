@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
         val uri = Uri.parse("android.resource://$packageName/drawable/$imgName")
         val ref = storage.reference.child("rawiyat/" + UUID.randomUUID().toString())
         ref.putFile(uri).addOnSuccessListener {
-            ref.downloadUrl.addOnSuccessListener {
-                Log.d("suwret", it.toString())
+            ref.downloadUrl.addOnSuccessListener {it->
                 val map: MutableMap<String, Any> = mutableMapOf()
                 map["id"] = UUID.randomUUID().toString()
                 map["title"] = rawyat.title.toString()
