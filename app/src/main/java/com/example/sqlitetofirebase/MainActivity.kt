@@ -31,9 +31,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun uploadPhoto(rawyat: RawyatClass) {
-        val imgName = rawyat.img.toString().substringAfterLast('/')
+        var imgName = rawyat.img.toString().substringAfterLast('/')
+        imgName = imgName.replace('-', '_')
+        imgName = imgName.removeRange(imgName.length-4, imgName.length)
         val uri = Uri.parse("android.resource://$packageName/drawable/$imgName")
-        val ref = storage.reference.child("images/" + UUID.randomUUID().toString())
+        val ref = storage.reference.child("rawiyat/" + UUID.randomUUID().toString())
         ref.putFile(uri).addOnSuccessListener {
             ref.downloadUrl.addOnSuccessListener {
                 Log.d("suwret", it.toString())
@@ -42,8 +44,8 @@ class MainActivity : AppCompatActivity() {
                 map["title"] = rawyat.title.toString()
                 map["image"] = it.toString()
                 map["text"] = rawyat.full_text.toString()
-                map["hits"] = rawyat.hits.toString()
-                db.collection("rawiyat").document(map["id"].toString()).set(map)
+                map["views"] = rawyat.hits.toString()
+                db.collection("rawiyatlar").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
                         }
