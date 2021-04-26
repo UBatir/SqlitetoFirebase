@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
             data.forEach{ it ->
                 map["id"] = UUID.randomUUID().toString()
                 map["title"] = it.title.toString()
-                map["full_text"] = it.full_text.toString()
-                map["hits"] = it.hits.toString()
+                map["text"] = it.full_text.toString()
+                map["views"] = it.hits.toString()
                 db.collection("patua").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Otlichno", Toast.LENGTH_SHORT).show()
