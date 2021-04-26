@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
             data.forEach{ it ->
                 map["id"] = UUID.randomUUID().toString()
                 map["title"] = it.title.toString()
-                map["full_text"] = it.full_text.toString()
+                map["text"] = it.full_text.toString()
                 map["date"] = it.date.toString()
-                map["hits"] = it.hits.toString()
+                map["views"] = it.hits.toString()
                 map["hide"] = it.hide.toString()
                 db.collection("posts").document(map["id"].toString()).set(map)
                         .addOnSuccessListener {
