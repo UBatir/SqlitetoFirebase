@@ -11,5 +11,5 @@ data class RawyatClass(
     @ColumnInfo(name= "title") val title:String?,
     @ColumnInfo(name= "img") val img:String?,
     @ColumnInfo(name= "full_text") val full_text:String?,
-    @ColumnInfo(name= "hits") val hits:Long?
+    @ColumnInfo(name= "hits") val hits:String?
 )
